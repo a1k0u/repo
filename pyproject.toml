@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "stud-api"
+version = "0.1.0"
+description = "API for stud-turism mobile application"
+authors = ["a1k0u <alko7enko@gmail.com>"]
+readme = "README.md"
+packages = [{include = "stud_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.92.0"
+uvicorn = "^0.20.0"
+requests = "^2.28.2"
+sqlalchemy = "^2.0.3"
+psycopg2 = "^2.9.5"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+pylint = "^2.16.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
