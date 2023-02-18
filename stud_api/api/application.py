@@ -4,6 +4,7 @@ from stud_api.api.routes.events import events_router
 from stud_api.api.routes.news import news_router
 from stud_api.api.routes.bookings import bookings_router
 from stud_api.api.routes.auth import auth_router
+from stud_api.api.routes.tikects import ticket_router
 
 from stud_api.db.engine import engine
 import stud_api.db.models as models
@@ -34,6 +35,7 @@ app.include_router(events_router, tags=["Events"])
 app.include_router(news_router, tags=["News"])
 app.include_router(bookings_router, tags=["Booking"])
 app.include_router(auth_router, tags=["Auth"])
+app.include_router(ticket_router, tags=["Tickets"])
 
 app.add_exception_handler(405, exceptions.method_not_allowed_handler)
 app.add_exception_handler(404, exceptions.page_not_found_error_handler)
