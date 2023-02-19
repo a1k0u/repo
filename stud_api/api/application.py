@@ -4,7 +4,7 @@ from stud_api.api.routes.events import events_router
 from stud_api.api.routes.news import news_router
 from stud_api.api.routes.bookings import bookings_router
 from stud_api.api.routes.auth import auth_router
-from stud_api.api.routes.tikects import ticket_router
+from stud_api.api.routes.tickets import ticket_router
 
 from stud_api.db.engine import engine
 import stud_api.db.models as models

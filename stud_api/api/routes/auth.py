@@ -10,9 +10,7 @@ import stud_api.db.models as models
 import stud_api.db.crud as crud
 
 from fastapi import APIRouter
-from fastapi import status
 from fastapi import Depends
-from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 auth_router = APIRouter(prefix="/auth")

@@ -26,3 +26,10 @@ class EventFilter(BaseModel):
     university: str = None
     region: str = None
     city: str = None
+
+
+class EventAdd(BaseModel):
+    eventId: str
+    name: str
+    phone: str
+    email: str
