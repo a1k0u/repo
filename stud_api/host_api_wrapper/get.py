@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path="./")
 
-URL = os.getenv("HOST_API")
+# URL = os.getenv("HOST_API")
+URL = "https://stud-api.sabir.pro"
 
 
 def __get_host_data(path: str, **kwargs):

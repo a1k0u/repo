@@ -8,6 +8,7 @@ from stud_api.api.exceptions import USER_ERRORS
 from stud_api.db.connection import get_db
 from stud_api.host_api_wrapper.post import create_event_booking
 from stud_api.host_api_wrapper.put import update_event_booking
+from stud_api.host_api_wrapper.delete import delete_event_booking
 import stud_api.db.crud as crud
 
 from typing import Optional
@@ -36,26 +37,31 @@ def get_events(filter: Optional[EventFilter] = None, db: Session = Depends(get_d
 
 
 @events_router.post("/add")
-def add_user_event(event: EventAdd, access_token: str = Header(...)):
-    is_user_exist = crud.check_user_registration(access_token)
+def add_user_event(
+    event: EventAdd, access_token: str = Header(...), db: Session = Depends(get_db)
+):
+    is_user_exist = crud.check_user_registration(db, access_token)
     if not is_user_exist:
         raise HTTPException(403)
 
     token_out = is_user_exist.token_out
-    create_event_booking(
+    return create_event_booking(
         {
-            "evendId": event.eventId,
+            "eventId": event.eventId,
             "details": {
                 "quantity": "1",
                 "fullName": event.name,
                 "phone": event.phone,
                 "email": event.email,
-                "participants": [{"fullName": event.name}],
+                "participants": [
+                    {
+                        "fullName": event.name,
+                    },
+                ],
             },
         },
         token_out,
     )
-    return JSONResponse({"message": "OK"}, status.HTTP_202_ACCEPTED)
 
 
 @events_router.delete(
@@ -65,12 +71,11 @@ def add_user_event(event: EventAdd, access_token: str = Header(...)):
     description="### Delete user event booking\n" "- Event id\n" "- User access token",
     name="Delete user event booking",
 )
-def delete_user_event(event_id: EventId, access_token: str = Header(...)):
-    is_user_exist = crud.check_user_registration(access_token)
+def delete_user_event(
+    event_id: EventId, access_token: str = Header(...), db: Session = Depends(get_db)
+):
+    is_user_exist = crud.check_user_registration(db, access_token)
     if not is_user_exist:
         raise HTTPException(403)
 
-    update_event_booking(
-        {"id": EventId.id, "status": "canceled"}, is_user_exist.token_out
-    )
-    return JSONResponse({"message": "OK"}, status.HTTP_202_ACCEPTED)
+    return delete_event_booking(event_id.id, is_user_exist.token_out)

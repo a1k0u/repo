@@ -58,8 +58,12 @@ class DormitoryFilter(BaseModel):
 
 
 class Date(BaseModel):
-    "from": str
-    "to": str
+    from_: str
+    to: str
+
+    class Config:
+        fields = {"from_": "from"}
+
 
 class Connection(BaseModel):
     email: str
@@ -69,6 +73,7 @@ class Connection(BaseModel):
 class Author(BaseModel):
     name: str
     connection: Connection
+
 
 class DomitoryAdd(BaseModel):
     dormitoryId: str

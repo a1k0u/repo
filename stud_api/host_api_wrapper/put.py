@@ -4,7 +4,9 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path="./")
 
-URL = os.getenv("HOST_API")
+
+# URL = os.getenv("HOST_API")
+URL = "https://stud-api.sabir.pro"
 
 
 def __put_host_data(path: str, **kwargs):
@@ -14,9 +16,9 @@ def __put_host_data(path: str, **kwargs):
 
 def update_event_booking(data: dict, token: str) -> dict:
     return __put_host_data(
-        "event-bookings", data=data, headers={"Authorization": token}
+        "event-bookings", json=data, headers={"Authorization": token}
     )
 
 
 def update_dormitory_booking(data: dict, token: str) -> dict:
-    return __put_host_data("bookings", data=data, headers={"Authorization": token})
+    return __put_host_data("bookings", json=data, headers={"Authorization": token})
