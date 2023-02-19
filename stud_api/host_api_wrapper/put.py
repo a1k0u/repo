@@ -16,3 +16,7 @@ def update_event_booking(data: dict, token: str) -> dict:
     return __put_host_data(
         "event-bookings", data=data, headers={"Authorization": token}
     )
+
+
+def update_dormitory_booking(data: dict, token: str) -> dict:
+    return __put_host_data("bookings", data=data, headers={"Authorization": token})

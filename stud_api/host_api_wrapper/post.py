@@ -24,3 +24,6 @@ def create_event_booking(data: dict, token: str) -> dict:
     return __post_host_data(
         "event-bookings", data=data, headers={"Authorization": token}
     )
+
+def create_dormitory_booking(data: dict, token: str) -> dict:
+    return __post_host_data("bookings", data=data, headers={"Authorization": token})

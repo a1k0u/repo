@@ -1,7 +1,9 @@
 from stud_api.api.models.bookings import UserBooking
 from stud_api.api.exceptions import USER_ERRORS
-
 from stud_api.utils.placeholders import BOOKINGS
+from stud_api.host_api_wrapper.get import get_booking_events
+from stud_api.host_api_wrapper.get import get_booking_dormitories
+import stud_api.db.crud as crud
 
 from fastapi import APIRouter
 from fastapi import status
@@ -15,11 +17,21 @@ bookings_router = APIRouter(prefix="/booking")
 
 @bookings_router.get(
     path="/my",
-    responses=USER_ERRORS,
-    response_model=UserBooking,
+    responses={**USER_ERRORS, 200: {"model": UserBooking}},
     status_code=200,
     description="### Returns all user booking\n" "- User access token is required",
     name="Get all user bookings",
 )
 def get_my_bookings(access_token: str = Header(...)):
-    return JSONResponse(BOOKINGS, status.HTTP_200_OK)
+    is_user_exist = crud.check_user_registration(access_token)
+    if not is_user_exist:
+        raise HTTPException(403)
+    
+    token_out = is_user_exist.token_out
+    events = get_booking_events(token_out)
+    dormitories = get_booking_dormitories(token_out)
+
+    return JSONResponse({
+        "dormitories": dormitories,
+        "events": events
+    }, 200)

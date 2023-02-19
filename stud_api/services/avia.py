@@ -22,7 +22,7 @@ def get_price(frm: str, to: str) -> Optional[int]:
     )
     serialized = response.json()
 
-    tickets = serialized["data"]
+    tickets = serialized.get("data", [])
     price = [ticket["price"] for ticket in tickets]
 
     return min(price) if price else None

@@ -60,8 +60,7 @@ def add_user_event(event: EventAdd, access_token: str = Header(...)):
 
 @events_router.delete(
     path="/delete",
-    responses=USER_ERRORS,
-    response_model=Message,
+    responses={**USER_ERRORS, 200: {"model": Message}},
     status_code=200,
     description="### Delete user event booking\n" "- Event id\n" "- User access token",
     name="Delete user event booking",

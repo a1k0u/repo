@@ -55,3 +55,24 @@ class DormitoryFilter(BaseModel):
     district: str = None
     city: str = None
     meal: str = None
+
+
+class Date(BaseModel):
+    "from": str
+    "to": str
+
+class Connection(BaseModel):
+    email: str
+    phone: str
+
+
+class Author(BaseModel):
+    name: str
+    connection: Connection
+
+class DomitoryAdd(BaseModel):
+    dormitoryId: str
+    roomId: str
+    quantity: str
+    dates: Date
+    author: Author

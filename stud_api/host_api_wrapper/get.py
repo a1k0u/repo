@@ -51,3 +51,7 @@ def get_user(token: str) -> dict:
 
 def get_booking_events(token: str) -> list[dict]:
     return __get_host_data("event-bookings/my", headers={"Authorization": token})
+
+
+def get_booking_dormitories(token: str) -> list[dict]:
+    return __get_host_data("bookings/my", headers={"Authorization": token})
