@@ -3,6 +3,7 @@ from typing import Optional
 import requests
 from fuzzywuzzy import process
 
+
 def get_price(frm: str, to: str) -> Optional[int]:
     origin, score_0 = process.extractOne(frm.lower(), CITIES)
     desrination, score_1 = process.extractOne(to.lower(), CITIES)
@@ -16,11 +17,13 @@ def get_price(frm: str, to: str) -> Optional[int]:
         "token": "fac97cc4f2e56ed0ec92316b358991c2",
     }
 
-    response = requests.get("https://api.travelpayouts.com/aviasales/v3/prices_for_dates", params=params)
+    response = requests.get(
+        "https://api.travelpayouts.com/aviasales/v3/prices_for_dates", params=params
+    )
     serialized = response.json()
 
-    data = serialized["data"]
-    price = [ticket["price"] for ticket in data]
+    tickets = serialized["data"]
+    price = [ticket["price"] for ticket in tickets]
 
     return min(price) if price else None
 

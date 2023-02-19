@@ -1,19 +1,16 @@
 import os
-import json
 import requests
 from typing import Union
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path="../")
+load_dotenv(dotenv_path="./")
 
-# URL = os.getenv("HOST_API")
-
-URL = "https://stud-api.sabir.pro"
+URL = os.getenv("HOST_API")
 
 
-def __get_host_data(path: str):
-    response = requests.get(f"{URL}/{path}")
-    return json.loads(response.text)
+def __get_host_data(path: str, **kwargs):
+    response = requests.get(f"{URL}/{path}", **kwargs)
+    return response.json()
 
 
 def get_universities() -> Union[dict, list]:
@@ -46,3 +43,11 @@ def get_bookings() -> Union[dict, list]:
 
 def get_news() -> Union[dict, list]:
     return __get_host_data("articles")
+
+
+def get_user(token: str) -> dict:
+    return __get_host_data("me", headers={"Authorization": token})
+
+
+def get_booking_events(token: str) -> list[dict]:
+    return __get_host_data("event-bookings/my", headers={"Authorization": token})

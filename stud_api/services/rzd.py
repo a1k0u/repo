@@ -32,7 +32,7 @@ def __get_all_sugests():
     for l0 in ru:
         for l1 in ru:
             response = requests.get(
-                f"https://pass.rzd.ru/suggester?compactMode=y&stationNamePart={l0}{l1}lang=ru"
+                f"https://pass.rzd.ru/suggester?compactMode=y&stationNamePart={l0}{l1}&lang=ru"
             )
             serialized = response.json()
 
@@ -43,6 +43,9 @@ def __get_all_sugests():
 
     pprint(city_codes)
 
+
+if __name__ == "__main__":
+    __get_all_sugests()
 
 CITY_CODES = {}
 CITIES = []

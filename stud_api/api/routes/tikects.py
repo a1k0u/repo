@@ -7,7 +7,7 @@ import stud_api.services.avia as avia
 from stud_api.api.exceptions import ERROR_RESPONSES
 from fastapi import APIRouter
 
-ticket_router = APIRouter(prefix="/tikects")
+ticket_router = APIRouter(prefix="/tickets")
 
 
 @ticket_router.post(
@@ -21,7 +21,7 @@ ticket_router = APIRouter(prefix="/tikects")
     "If **no tickets** for your parameters, then **NULL** will return.",
 )
 def get_rzd_ticket(information: RzdRequest):
-    return {"price": avia.get_price(information.frm, information.to, information.date)}
+    return {"price": rzd.get_price(information.frm, information.to, information.date)}
 
 
 @ticket_router.post(

@@ -138,3 +138,40 @@ class Service(Base):
 
     dormitory_id = Column(String, ForeignKey("dormitories.id"))
     dormitory = relationship("Dormitory", back_populates="services")
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(String, primary_key=True)
+    email = Column(String)
+    phone = Column(String, default="")
+    city = Column(String, default="")
+    token_in = Column(String)
+    token_out = Column(String)
+    money = Column(Integer, default=0)
+    level = Column(Integer, default=0)
+
+    awards = relationship("UserAward", back_populates="user")
+
+
+class UserAward(Base):
+    __tablename__ = "users_awards"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String, ForeignKey("users.id"))
+    award_id = Column(Integer, ForeignKey("awards.id"))
+
+    award = relationship("Award", back_populates="users")
+    user = relationship("User", back_populates="awards")
+
+
+class Award(Base):
+    __tablename__ = "awards"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
+    description = Column(String)
+    cost = Column(Integer, default=100)
+
+    users = relationship("UserAward", back_populates="award")

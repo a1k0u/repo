@@ -7,9 +7,13 @@ from sqlalchemy import asc
 
 
 def create_object(db: Session, model, *_, **kwargs):
-    db_news = model(**kwargs)
-    db.add(db_news)
+    db_element = model(**kwargs)
+    db.add(db_element)
     db.commit()
+
+
+def check_user_registration(db: Session, token: str):
+    return db.query(models.User).where(models.User.token_in == token).first()
 
 
 def delete_tables(db: Session, model):
